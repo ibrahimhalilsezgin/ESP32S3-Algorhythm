@@ -26,15 +26,17 @@ class FFmpegEncoder {
             '-vcodec', 'mjpeg',
             '-framerate', String(this.fps),
             '-i', 'pipe:0',
+            // Upscale video to 1080p using Lanczos filtering (smooth & high quality)
+            '-vf', 'scale=1920:1080:flags=lanczos',
             // Video codec
             '-c:v', 'libx264',
             '-preset', 'ultrafast',
             '-tune', 'zerolatency',
             '-pix_fmt', 'yuv420p',
-            '-g', '10', // Keyframe interval (1 saniyede bir keyframe)
-            // HLS çıkış
+            '-g', '10', // Keyframe interval
+            // HLS output
             '-f', 'hls',
-            '-hls_time', '1', // 1 saniyelik segmentler
+            '-hls_time', '1',
             '-hls_list_size', '3',
             '-hls_flags', 'delete_segments+append_list+split_by_time',
             '-hls_segment_filename', path.join(this.hlsDir, 'seg_%03d.ts'),
