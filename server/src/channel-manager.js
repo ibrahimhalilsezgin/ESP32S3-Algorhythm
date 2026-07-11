@@ -17,7 +17,7 @@ class ChannelManager {
         }
 
         const channelId = chipId; // chip_id'yi kanal ID olarak kullan
-        const [w, h] = (resolution || '320x240').split('x').map(Number);
+        const [w, h] = (resolution || '600x600').split('x').map(Number);
 
         const encoder = new FFmpegEncoder(channelId, this.hlsDir, {
             width: w, height: h, fps: 10
@@ -30,7 +30,7 @@ class ChannelManager {
             ws,
             encoder,
             generator: generator || 'unknown',
-            resolution: resolution || '320x240',
+            resolution: resolution || '600x600',
             connectedAt: Date.now(),
             lastFrame: Date.now(),
             frameCount: 0

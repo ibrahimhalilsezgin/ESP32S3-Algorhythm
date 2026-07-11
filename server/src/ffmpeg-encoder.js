@@ -7,8 +7,8 @@ class FFmpegEncoder {
         this.channelId = channelId;
         this.hlsDir = path.join(hlsDir, channelId);
         this.fps = options.fps || 10;
-        this.width = options.width || 320;
-        this.height = options.height || 240;
+        this.width = options.width || 600;
+        this.height = options.height || 600;
         this.process = null;
         this.frameCount = 0;
     }
@@ -26,8 +26,8 @@ class FFmpegEncoder {
             '-vcodec', 'mjpeg',
             '-framerate', String(this.fps),
             '-i', 'pipe:0',
-            // Upscale video to 1080p using Lanczos filtering (smooth & high quality)
-            '-vf', 'scale=1920:1080:flags=lanczos',
+            // Upscale video to 1080x1080 using Lanczos filtering (smooth & high quality 1:1)
+            '-vf', 'scale=1080:1080:flags=lanczos',
             // Video codec
             '-c:v', 'libx264',
             '-preset', 'ultrafast',
