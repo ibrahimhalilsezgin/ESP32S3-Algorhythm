@@ -2,6 +2,17 @@
 
 This project enables one or more **ESP32-S3** microcontrollers to generate real-time visuals using mathematical algorithms (Fractal, Cellular Automata, Noise, etc.), stream them to a Node.js server via WebSockets, and transcode the frames on the fly using FFmpeg into a low-latency HLS (HTTP Live Streaming) video stream playable on a web-based dashboard.
 
+## Supported Boards
+
+This project is optimized for the **ESP32-S3** SoC series due to the reliance on the hardware vector instructions (SIMD) in `esp32-camera` (using the native `fmt2jpg` conversion) for fast JPEG encoding.
+
+- **ESP32-S3-DevKitC-1** (N8, N16R8, and all variants)
+- **ESP32-S3-WROOM-1 / 1U** modules
+- **Seeed Studio XIAO ESP32S3**
+- **LilyGO T-Display-S3 / T-Dongle-S3**
+- **Freenove ESP32-S3 WROOM**
+- Any custom ESP32-S3 development board (PSRAM is highly recommended for higher resolutions, though the default 320x240 resolution works on standard SRAM).
+
 ## System Architecture
 
 ```
