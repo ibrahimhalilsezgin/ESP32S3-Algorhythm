@@ -5,22 +5,37 @@
 class NoiseGen : public BaseGenerator {
 public:
     void generate(uint16_t* buffer, int width, int height, uint32_t frame_num) override {
-        float t = frame_num * 0.03f;
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
+        // 600x600'de performansı korumak için 3x3 bloklar halinde (200x200 mantıksal) çiziyoruz.
+        int scale = 3;
+        int logicalW = width / scale;
+        int logicalH = height / scale;
+
+        float t = frame_num * 0.04f;
+        for (int y = 0; y < logicalH; y++) {
+            for (int x = 0; x < logicalW; x++) {
                 // Basit value noise (hash tabanlı)
-                float nx = x * 0.02f + t;
-                float ny = y * 0.02f + t * 0.5f;
+                float nx = x * 0.03f + t;
+                float ny = y * 0.03f + t * 0.5f;
                 float v = noise2d(nx, ny);
                 float v2 = noise2d(nx * 2.0f, ny * 2.0f) * 0.5f;
-                float v3 = noise2d(nx * 4.0f, ny * 4.0f) * 0.25f;
-                v = (v + v2 + v3) / 1.75f;
+                v = (v + v2) / 1.5f; // octave sayısını 3'ten 2'ye indirdik (hız için)
                 v = (v + 1.0f) * 0.5f;  // 0..1
 
-                uint8_t r = (uint8_t)(v * 100);
-                uint8_t g = (uint8_t)(v * 200 + 55);
-                uint8_t b = (uint8_t)(v * 150 + 50);
-                buffer[y * width + x] = ((r & 0xF8) << 8) | ((g & 0xFC) << 3) | (b >> 3);
+                // Renkli gradient palet
+                uint8_t r = (uint8_t)(v * 120 + 30);
+                uint8_t g = (uint8_t)(v * 200 + 40);
+                uint8_t b = (uint8_t)(v * 160 + 80);
+                uint16_t color = ((r & 0xF8) << 8) | ((g & 0xFC) << 3) | (b >> 3);
+
+                // 3x3 piksel bloğunu boya
+                int py_start = y * scale;
+                int px_start = x * scale;
+                for (int dy = 0; dy < scale; dy++) {
+                    int rowOffset = (py_start + dy) * width;
+                    for (int dx = 0; dx < scale; dx++) {
+                        buffer[rowOffset + (px_start + dx)] = color;
+                    }
+                }
             }
         }
     }
