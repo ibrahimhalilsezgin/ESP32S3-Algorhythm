@@ -1,0 +1,16 @@
+{
+  "name": "esp32s3-algorhythm-server",
+  "version": "1.0.0",
+  "description": "ESP32S3-Algorhythm Generative Art Streaming Platform",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js"
+  },
+  "dependencies": {
+    "express": "^4.18.0",
+    "ws": "^8.16.0",
+    "uuid": "^9.0.0",
+    "dotenv": "^16.4.0"
+  }
+}

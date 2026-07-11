@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESP32S3-Algorhythm</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+</head>
+<body>
+    <header>
+        <h1>ESP32S3-Algorhythm</h1>
+        <div id="stats">
+            <span id="channelCount">0</span> aktif kanal
+            <span id="totalFrames">0</span> toplam frame
+        </div>
+    </header>
+
+    <main>
+        <div id="grid" class="channel-grid">
+            <div class="empty-state" id="emptyState">
+                <p>Bağlı ESP32 yok</p>
+                <p class="sub">ESP32 cihazlarını bağlayın, yayınlar burada görünecek</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Tam ekran modal -->
+    <div id="modal" class="modal hidden">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal()">&times;</button>
+            <video id="modalVideo" autoplay muted></video>
+            <div id="modalInfo" class="modal-info"></div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

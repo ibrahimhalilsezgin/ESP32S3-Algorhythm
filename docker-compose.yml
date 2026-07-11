@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - DEVICE_TOKEN=${DEVICE_TOKEN:-esp32-secret-token-change-me}
+      - PORT=3000
+      - HLS_DIR=/app/hls
+    volumes:
+      - hls_data:/app/hls
+    restart: unless-stopped
+
+volumes:
+  hls_data:
